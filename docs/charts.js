@@ -10,6 +10,18 @@
     YPP: 'The youth and liberal party, focused on friendships, love, and responsible optimistic academics. Nicknamed the happiness party.',
 };
 
+const partyNames = {
+    SA: 'Socialist Alliance',
+    MCP: 'Moderate-Centrist Party',
+    LEP: 'Liberty-Equality Party',
+    MU: 'Musical Union',
+    AU: 'Academic Union',
+    NAP: 'Nationalist Action Party',
+    RLP: 'Reform-Labour Party',
+    CDoP: 'Crown Dominion Party',
+    YPP: 'Youth Power Party',
+}
+
 const partyPositions = {
     SA:   { academic: 5,  social: 25 },
     MCP:  { academic: 25, social: 25 },
@@ -296,7 +308,7 @@ function updateWinnerChart() {
                 tooltip: { callbacks: { label: context => `${context.dataset.label}: ${context.parsed.y}` } }
             },
             scales: {
-                x: { type: 'time', time: { unit: chooseTimeUnit(filtered), tooltipFormat: 'PP' }, grid: { color: '#edf2f7' } },
+                x: { type: 'time', time: { unit: chooseTimeUnit(filtered), tooltipFormat: 'PP' }, min: filtered[0].dateMs, max: filtered[filtered.length - 1].dateMs, grid: { color: '#edf2f7' } },
                 y: { beginAtZero: true, suggestedMax: 100, title: { display: true, text: 'Winning support' }, grid: { color: '#edf2f7' } }
             }
         }
@@ -359,6 +371,7 @@ function renderPartyNotes(parties) {
                 <div class="party-line">
                     <span class="swatch" style="background:${color}"></span>
                     <span>${escapeHtml(party)}</span>
+                    <span class="party-name">${escapeHtml(partyNames[party] || '')}</span>
                 </div>
                 ${spectrumBar('Academic Policy', 'Left', 'Right', pos.academic)}
                 ${spectrumBar('Social Policy', 'Left', 'Right', pos.social)}
